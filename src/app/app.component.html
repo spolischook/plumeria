@@ -1,24 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to
-  <img style="max-height: 30px;" src="https://www.pamono.com/skin/frontend/lamono/redesign/images/logo/pamono-large.png" alt="Antiques, Vintage Furniture and Design at Pamono.com">
-  staging!
-  </h1>
-</div>
-<h2>Products: </h2>
-<div *ngIf="!productList" class="spinner-border" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
-<ul *ngIf="productList" class="card-columns">
-  <li class="card" style="list-style: none" *ngFor="let product of productList.items">
-    <img src="{{product.image_urls[0]}}" class="card-img-top" alt="{{product.name}}">
-    <div class="card-body">
-      <h5 class="card-title">{{product.name}}<span class="badge badge-secondary">$ {{product.price}}</span></h5>
-      <p class="card-text">{{product.description}}</p>
-      <a href="#" class="btn btn-primary">View product</a>
-    </div>
-  </li>
-</ul>
+<app-top-menu></app-top-menu>
 
-<router-outlet></router-outlet>
+<div class="container" style="padding-top: 10px">
+  <router-outlet></router-outlet>
+</div>

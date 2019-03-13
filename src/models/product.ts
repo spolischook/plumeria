@@ -9,8 +9,12 @@ export class Product {
 
 export class ProductList {
   items: Array<Product>;
-  pageNumber: number;
-  pageSize: number;
-  totalItems: number;
-  totalPages: number;
+  page_number: number;
+  page_size: number;
+  total_items: number;
+  total_pages: number;
+
+  get pageNumber() {
+    return this.page_number;
+  }
 }

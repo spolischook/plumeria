@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-blue-light">
+  <div class="container" style="background-color: #ecf3ff !important">
+    <a class="navbar-brand" [routerLink]="''" style="max-width: 75%"><img style="max-height: 28px; max-width: 75%" src="https://www.pamono.com/skin/frontend/lamono/redesign/images/logo/pamono-large.png" alt="Antiques, Vintage Furniture and Design at Pamono.com"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngFor="let item of navs">
+          <a class="nav-link"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="item.url === '' ? { exact: true } : {}"
+             [routerLink]="item.url">
+            {{ item.title | uppercase }}
+          </a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <div class="input-group">
+
+          <input type="text" class="form-control" aria-describedby="button-addon4">
+          <div class="input-group-append" id="button-addon4">
+            <button class="btn btn-outline-secondary" type="button">Search</button>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="authenticator.apiToken" style="text-align:center; margin-left: 1em;"
+        [ngbPopover]="popUserInfo" placement="bottom" popoverTitle="User Info">
+        <fa-icon [icon]="userIco" size="2x"></fa-icon>
+      </div>
+      <div *ngIf="!authenticator.apiToken" style="text-align:center; margin-left: 1em;"
+        [ngbPopover]="popLogin" placement="bottom" popoverTitle="Login">
+        <fa-icon [icon]="singInIco" size="2x"></fa-icon>
+      </div>
+      <ng-template #popUserInfo>
+
+      </ng-template>
+      <ng-template #popLogin>
+        <form class="login">
+          <label for="username">Username:</label>
+          <input type="text" id="username">
+          <label for="password">Password:</label>
+          <input type="password" id="password">
+          <br><br>
+          <button type="submit" class="button btn-success">Login</button>
+          <br><br>
+          <a class="social-login" (click)="submitLogin($event);" href="#">
+            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" class="svg-inline--fa fa-facebook-f fa-w-9 fa-2x"><path fill="currentColor" d="M215.8 85H264V3.6C255.7 2.5 227.1 0 193.8 0 124.3 0 76.7 42.4 76.7 120.3V192H0v91h76.7v229h94V283h73.6l11.7-91h-85.3v-62.7c0-26.3 7.3-44.3 45.1-44.3z" class=""></path></svg>
+          </a>
+          <a class="social-login">
+            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" class="svg-inline--fa fa-google fa-w-16 fa-2x"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" class=""></path></svg>
+          </a>
+        </form>
+      </ng-template>
+    </div>
+  </div>
+</nav>

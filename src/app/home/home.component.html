@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <a routerLink="/{{item.link}}" class="col" *ngFor="let item of items">
+      <img src="{{item.image}}" class="rounded float-left fit-image" alt="{{item.title}}">
+      <span class="mx-auto">{{item.title}}</span>
+    </a>
+  </div>
+</div>
+<ngb-carousel *ngIf="banners">
+  <ng-template ngbSlide *ngFor="let banner of banners">
+
+    <a routerLink="/{{banner.link}}">
+      <img [src]="banner.image" alt="{{banner.title}}">
+      <div class="carousel-caption">
+        <h3>{{banner.title}}</h3>
+      </div>
+    </a>
+  </ng-template>
+</ngb-carousel>
