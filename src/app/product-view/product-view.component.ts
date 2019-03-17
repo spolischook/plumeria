@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Product} from '../../models/product';
 import {ProductRepositoryService} from '../repository/product-repository.service';
 import {ActivatedRoute} from '@angular/router';
+import {faHeart} from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+library.add(fas, far);
 
 @Component({
   selector: 'app-product-view',
@@ -11,6 +16,7 @@ import {ActivatedRoute} from '@angular/router';
 export class ProductViewComponent implements OnInit {
   product: Product;
   mainIamge: string;
+  wishIco = faHeart;
   constructor(private route: ActivatedRoute, private productRepository: ProductRepositoryService) {}
 
   ngOnInit() {

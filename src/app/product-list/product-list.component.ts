@@ -22,12 +22,13 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => this.loadProducts(params.page));
     this.page = +this.route.snapshot.queryParamMap.get('page') || 1;
     this.ps = +this.route.snapshot.queryParamMap.get('ps') || 20;
     this.loadProducts(this.page);
   }
 
-  showPage(page: number) {
+  goToPage(page: number) {
     const params = { page };
     this.page = page;
     this.router.navigate([], {
@@ -35,7 +36,6 @@ export class ProductListComponent implements OnInit {
       queryParams: params,
       queryParamsHandling: 'merge',
     });
-    this.loadProducts(this.page);
   }
 
   loadProducts(page) {

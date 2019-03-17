@@ -1,0 +1,15 @@
+<form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username">Email:</label>
+    <input [attr.disabled]="inProgress ? true : null" type="email" class="form-control" id="username" formControlName="email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input [attr.disabled]="inProgress ? true : null" type="password" class="form-control" id="password" formControlName="password">
+  </div>
+  <button type="submit" class="btn btn-success">
+    <span [style.display]="inProgress ? 'inline-block' : 'none'" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span [style.display]="inProgress ? 'none' : 'inline-block'">Login</span>
+  </button>
+  <br><br>
+</form>

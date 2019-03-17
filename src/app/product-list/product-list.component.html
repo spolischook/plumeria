@@ -2,7 +2,7 @@
   <span class="sr-only">Loading...</span>
 </div>
 <div *ngIf="productList">
-  <ngb-pagination (pageChange)="showPage($event)" [collectionSize]="productList.total_items" [(page)]="page" [pageSize]="ps" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+  <ngb-pagination (pageChange)="goToPage($event)" [collectionSize]="productList.total_items" [(page)]="page" [pageSize]="ps" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
   <ul class="card-columns">
     <li class="card" style="list-style: none" *ngFor="let product of productList.items">
       <img src="{{product.image_urls[0]}}" class="card-img-top" alt="{{product.name}}">
@@ -13,5 +13,5 @@
       </div>
     </li>
   </ul>
-  <ngb-pagination (pageChange)="showPage($event)" [collectionSize]="productList.total_items" [(page)]="page" [pageSize]="ps" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+  <ngb-pagination (pageChange)="goToPage($event)" [collectionSize]="productList.total_items" [(page)]="page" [pageSize]="ps" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
 </div>

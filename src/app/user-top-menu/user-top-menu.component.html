@@ -1,0 +1,66 @@
+<div *ngIf="user" [autoClose]="'outside'" class="ico"
+     [ngbPopover]="popWishList" placement="bottom" popoverTitle="Your wish list">
+  <fa-icon [icon]="heartIco" size="2x"></fa-icon>
+</div>
+<div *ngIf="user" [autoClose]="'outside'" class="ico"
+     [ngbPopover]="popUserInfo" placement="bottom" popoverTitle="User Info">
+  <fa-icon [icon]="userIco" size="2x"></fa-icon>
+</div>
+<div *ngIf="!user" [autoClose]="'outside'" style="text-align:center; margin-left: 1em;"
+     [ngbPopover]="popLogin" placement="bottom" popoverTitle="Login">
+  <fa-icon [icon]="singInIco" size="2x"></fa-icon>
+</div>
+<ng-template #popUserInfo>
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        <td>Firs Name</td>
+        <td>{{user.firstname}}</td>
+      </tr>
+      <tr>
+        <td>Last Name</td>
+        <td>{{user.lastname}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{user.email}}</td>
+      </tr>
+      <tr>
+        <td>Facebook</td>
+        <td>{{user.facebook_id}}</td>
+      </tr>
+      <tr>
+        <td>Google</td>
+        <td>{{user.google_id}}</td>
+      </tr>
+    </table>
+    <button type="button" class="button btn-dark" (click)="logout()">Logout</button>
+  </div>
+</ng-template>
+<ng-template #popWishList>
+
+</ng-template>
+<ng-template #popLogin>
+  <div id="overlay" [style.display]="inProgress ? 'block' : 'none'">
+    <div class="spinner-border text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <app-user-login-form (userFormLogin)="formLoginEvent($event)"></app-user-login-form>
+  <a class="social-login" (click)="login($event, 'facebook');" href="#">
+    <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" role="img"
+         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" class="svg-inline--fa fa-facebook-f fa-w-9 fa-2x">
+      <path fill="currentColor"
+            d="M215.8 85H264V3.6C255.7 2.5 227.1 0 193.8 0 124.3 0 76.7 42.4 76.7 120.3V192H0v91h76.7v229h94V283h73.6l11.7-91h-85.3v-62.7c0-26.3 7.3-44.3 45.1-44.3z"
+            class=""></path>
+    </svg>
+  </a>
+  <a class="social-login" (click)="login($event, 'google');" href="#">
+    <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img"
+         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" class="svg-inline--fa fa-google fa-w-16 fa-2x">
+      <path fill="currentColor"
+            d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
+            class=""></path>
+    </svg>
+  </a>
+</ng-template>
