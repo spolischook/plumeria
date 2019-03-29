@@ -1,4 +1,4 @@
-<div *ngIf="user" [autoClose]="'outside'" class="ico"
+<div *ngIf="user" [autoClose]="'outside'" class="ico" (click)="getWishList()"
      [ngbPopover]="popWishList" placement="bottom" popoverTitle="Your wish list">
   <fa-icon [icon]="heartIco" size="2x"></fa-icon>
 </div>
@@ -38,10 +38,26 @@
   </div>
 </ng-template>
 <ng-template #popWishList>
-
+  <div class="overlay" [style.display]="inProgress ? 'block' : 'none'">
+    <div class="spinner-border text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <ul class="wishlist" *ngIf="!inProgress">
+    <li *ngFor="let product of wishList.items">
+      <div class="row">
+        <div class="col-4">
+          <img src="{{product.image_urls[0]}}">
+        </div>
+        <div class="col-8">
+          <a routerLink="/products/{{product.id}}"><h6>{{product.name}}</h6></a>
+        </div>
+      </div>
+    </li>
+  </ul>
 </ng-template>
 <ng-template #popLogin>
-  <div id="overlay" [style.display]="inProgress ? 'block' : 'none'">
+  <div class="overlay" [style.display]="inProgress ? 'block' : 'none'">
     <div class="spinner-border text-info" role="status">
       <span class="sr-only">Loading...</span>
     </div>

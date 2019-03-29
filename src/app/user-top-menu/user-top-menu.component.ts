@@ -8,8 +8,9 @@ import {
   FacebookLoginProvider,
   GoogleLoginProvider
 } from 'angular-6-social-login';
-import {NgFlashMessageService} from 'ng-flash-messages';
 import {HttpErrorResponse} from '@angular/common/http';
+import {ProductList} from '../../models/product';
+import {LoggerService} from '../logger.service';
 
 declare var FB: any;
 
@@ -24,14 +25,14 @@ export class UserTopMenuComponent implements OnInit {
   singInIco = faSignInAlt;
   heartIco = faHeart;
   inProgress: boolean;
+  wishList: ProductList;
 
   constructor(
     private userService: UserService,
     protected localStorage: LocalStorage,
     private socialAuthService: AuthService,
-    private ngFlashMessageService: NgFlashMessageService
-  ) {
-  }
+    private logger: LoggerService
+  ) {}
 
   ngOnInit() {
     this.user = this.userService.user;
@@ -44,6 +45,21 @@ export class UserTopMenuComponent implements OnInit {
 
   getUser() {
     return this.userService.user;
+  }
+
+  getWishList() {
+    this.inProgress = true;
+    this.wishList = undefined;
+    this.userService.getWishList().subscribe(
+      response => {
+        this.inProgress = false;
+        this.wishList = response.body;
+      },
+      err => {
+        this.inProgress = false;
+        this.logger.handleHttpError(err);
+      }
+    );
   }
 
   login(event, socialPlatform: string) {
@@ -62,24 +78,23 @@ export class UserTopMenuComponent implements OnInit {
                 this.user = this.userService.user;
                 this.inProgress = false;
               },
-              err => this.handleLoginError(err)
+              err => {
+                this.inProgress = false;
+                this.logger.handleHttpError(err);
+              }
             );
           },
-          err => this.handleLoginError(err)
+          err => {
+            this.inProgress = false;
+            this.logger.handleHttpError(err);
+          }
         );
       },
-      err => this.handleLoginError(err)
+      err => {
+        this.inProgress = false;
+        this.logger.handleHttpError(err);
+      }
     );
-  }
-
-  private handleLoginError(err: HttpErrorResponse) {
-    this.inProgress = false;
-    this.ngFlashMessageService.showFlashMessage({
-      messages: [err.message],
-      dismissible: true,
-      timeout: false,
-      type: 'danger'
-    });
   }
 
   logout() {

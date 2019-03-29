@@ -21,6 +21,8 @@ import {
   FacebookLoginProvider,
 } from 'angular-6-social-login';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
+import { TestComponent } from './test/test.component';
+import { ProductViewWishlistComponent } from './product-view-wishlist/product-view-wishlist.component';
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig(
@@ -46,7 +48,9 @@ export function getAuthServiceConfigs() {
     HomeComponent,
     CategoryViewComponent,
     UserTopMenuComponent,
-    UserLoginFormComponent
+    UserLoginFormComponent,
+    TestComponent,
+    ProductViewWishlistComponent
   ],
   imports: [
     BrowserModule,

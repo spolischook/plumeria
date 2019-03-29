@@ -1,4 +1,4 @@
-<div *ngIf="!product" class="spinner-border" role="status">
+<div *ngIf="!product" class="spinner-border text-info" role="status" >
   <span class="sr-only">Loading...</span>
 </div>
 
@@ -13,8 +13,7 @@
   </div>
   <div class="col-md-9 col-sm-12">
     <h3>{{product.name}}
-      <fa-icon [icon]="['fas', 'heart']"></fa-icon>
-      <fa-icon [icon]="['far', 'heart']"></fa-icon>
+      <app-product-view-wishlist [product]="product"></app-product-view-wishlist>
     </h3>
     <p>{{product.description}}</p>
   </div>

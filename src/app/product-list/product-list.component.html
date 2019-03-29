@@ -1,4 +1,4 @@
-<div *ngIf="!productList" class="spinner-border" role="status">
+<div *ngIf="inProgress === true" class="spinner-border" role="status">
   <span class="sr-only">Loading...</span>
 </div>
 <div *ngIf="productList">

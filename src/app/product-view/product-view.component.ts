@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Product} from '../../models/product';
 import {ProductRepositoryService} from '../repository/product-repository.service';
 import {ActivatedRoute} from '@angular/router';
-import {faHeart} from '@fortawesome/free-solid-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-library.add(fas, far);
+import {LoggerService} from '../logger.service';
 
 @Component({
   selector: 'app-product-view',
@@ -15,21 +11,37 @@ library.add(fas, far);
 })
 export class ProductViewComponent implements OnInit {
   product: Product;
+  inProgress: boolean;
   mainIamge: string;
-  wishIco = faHeart;
-  constructor(private route: ActivatedRoute, private productRepository: ProductRepositoryService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productRepository: ProductRepositoryService,
+    private logger: LoggerService
+  ) {}
 
   ngOnInit() {
-    this.loadProduct();
+    this.inProgress = true;
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.loadProduct(id);
+    this.route.params.subscribe(routeParams => {
+      this.loadProduct(routeParams.id);
+    });
   }
 
-  loadProduct() {
-    const id = +this.route.snapshot.paramMap.get('id');
+  loadProduct(id) {
+    this.product = undefined;
     this.productRepository.getOne(id)
     // .subscribe(response => console.log(response));
-    .subscribe(response => {
-      this.product = response.body;
-      this.mainIamge = this.product.image_urls[0];
-    });
+    .subscribe(
+      response => {
+        this.inProgress = false;
+        this.product = response.body;
+        this.mainIamge = this.product.image_urls[0];
+      },
+      err => {
+        this.inProgress = false;
+        this.logger.handleHttpError(err);
+      }
+    );
   }
 }

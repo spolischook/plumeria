@@ -1,7 +1,7 @@
 a.social-login {
   margin: 1em 1em 0 0;
 }
-#overlay {
+.overlay {
   position: fixed; /* Sit on top of the page content */
   display: none; /* Hidden by default */
   width: 100%; /* Full width (cover the whole page) */
@@ -27,4 +27,9 @@ a.social-login {
   text-align:center;
   margin-left: 1em;
   float: left;
+}
+
+.wishlist {
+  list-style: none;
+  padding: 0;
 }

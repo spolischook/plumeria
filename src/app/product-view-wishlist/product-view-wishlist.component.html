@@ -1,0 +1,5 @@
+<div class="spinner-border text-info" role="status" *ngIf="inProgress === true">
+  <span class="sr-only">Loading...</span>
+</div>
+<a (click)="toggle($event)" href="#"><fa-icon [icon]="['fas', 'heart']" *ngIf="isInWishList === true && inProgress !== true"></fa-icon></a>
+<a (click)="toggle($event)" href="#"><fa-icon [icon]="['far', 'heart']" *ngIf="isInWishList === false && inProgress !== true"></fa-icon></a>

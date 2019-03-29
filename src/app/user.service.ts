@@ -7,6 +7,7 @@ import {Observable, of} from 'rxjs';
 import {share} from 'rxjs/operators';
 import {SocialUser} from 'angular-6-social-login';
 import {NgFlashMessageService} from 'ng-flash-messages';
+import {Product, ProductList} from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,12 @@ export class UserService {
   };
 
   constructor(private http: HttpClient, private ngFlashMessageService: NgFlashMessageService) {
+    this.apiToken = this.getApiToken();
+    if (this.apiToken) {
+      this.httpOptions.headers = this.httpOptions.headers.set(
+        'X-AUTH-TOKEN', this.apiToken.access_token
+      );
+    }
   }
 
   set user(user: User) {
@@ -50,6 +57,28 @@ export class UserService {
     response.subscribe(apiResponse => this.user = apiResponse.body);
 
     return response;
+  }
+
+  getWishList(): Observable<HttpResponse<ProductList>> {
+    return this.http.get<HttpResponse<ProductList>>(
+      `${this.baseUrl}/users/self/wishlists/default/products`,
+      this.httpOptions
+    );
+  }
+
+  addToWishList(product: Product) {
+    return this.http.patch(
+      `${this.baseUrl}/users/self/wishlists/default/products`,
+      {id: product.id},
+      this.httpOptions
+    );
+  }
+
+  removeFromWishList(product: Product) {
+    return this.http.delete(
+      `${this.baseUrl}/users/self/wishlists/default/products/${product.id}`,
+      this.httpOptions
+    );
   }
 
   logout(): void {
@@ -96,5 +125,9 @@ export class UserService {
         localStorage.setItem('apiToken', JSON.stringify(this.apiToken));
       }
     );
+  }
+
+  getApiToken(): ApiToken {
+    return JSON.parse(localStorage.getItem('apiToken')) as ApiToken;
   }
 }

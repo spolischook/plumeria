@@ -3,6 +3,7 @@ import {ProductList} from '../../models/product';
 import {HttpResponse} from '@angular/common/http';
 import {ProductRepositoryService} from '../repository/product-repository.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {LoggerService} from '../logger.service';
 
 @Component({
   selector: 'app-product-list',
@@ -14,14 +15,17 @@ export class ProductListComponent implements OnInit {
   @Input() public categoryId: number;
   @Input() public ps: number;
   page: number;
+  inProgress: boolean;
 
   constructor(
     private productRepository: ProductRepositoryService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private logger: LoggerService
   ) {}
 
   ngOnInit(): void {
+    this.inProgress = true;
     this.route.queryParams.subscribe(params => this.loadProducts(params.page));
     this.page = +this.route.snapshot.queryParamMap.get('page') || 1;
     this.ps = +this.route.snapshot.queryParamMap.get('ps') || 20;
@@ -41,6 +45,15 @@ export class ProductListComponent implements OnInit {
   loadProducts(page) {
     this.productRepository.getList(page, this.ps, [this.categoryId])
       // .subscribe(response => console.log(response));
-      .subscribe(response => this.productList = response.body);
+      .subscribe(
+        response => {
+          this.inProgress = false;
+          this.productList = response.body;
+        },
+        err => {
+          this.inProgress = false;
+          this.logger.handleHttpError(err);
+        }
+      );
   }
 }
